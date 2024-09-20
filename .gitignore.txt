@@ -1,0 +1,19 @@
+# Arquivos Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ambiente virtual
+venv/
+env/
+
+# IDEs
+.vscode/
+.idea/
+
+# Banco de dados SQLite
+*.db
+
+# Arquivos de sistema
+.DS_Store
+Thumbs.db
