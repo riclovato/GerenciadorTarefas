@@ -1,3 +1,0 @@
-# Modelo de Dados
-
-[O modelo de dados do banco SQLite será adicionado aqui após sua criação.]
