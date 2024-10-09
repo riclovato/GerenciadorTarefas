@@ -23,7 +23,13 @@ def main():
         priority = Priority[args.priority]
         task_data = create_task(args.title, args.description, due_date, priority)
         if task_data:
-            print(f"Tarefa criada com ID: {task_data['id']}")
+            print(f"Tarefa criada com sucesso:")
+            print(f"ID: {task_data['id']}")
+            print(f"Título: {task_data['title']}")
+            print(f"Descrição: {task_data['description']}")
+            print(f"Data de vencimento: {task_data['due_date']}")
+            print(f"Prioridade: {task_data['priority']}")
+            print(f"Completada: {task_data['completed']}")
         else:
             print("Falha ao criar a tarefa.")
 

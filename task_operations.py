@@ -7,28 +7,39 @@ def create_task(title: str, description: str, due_date: datetime, priority: Prio
     try:
         new_task = Task(title=title, description=description, due_date=due_date, priority=priority)
         session.add(new_task)
-        session.commit()
-        # Retorna um dicionário com os dados da tarefa
-        return {
+        session.flush()  # This will assign an ID to new_task without committing
+
+        # Create a dictionary with task data
+        task_data = {
             'id': new_task.id,
             'title': new_task.title,
             'description': new_task.description,
             'due_date': new_task.due_date,
-            'priority': new_task.priority,
+            'priority': new_task.priority.name,  # Convert Enum to string
             'completed': new_task.completed
         }
+
+        session.commit()
+        return task_data
+    except Exception as e:
+        session.rollback()
+        print(f"Erro ao criar a tarefa: {e}")
+        return None
     except SQLAlchemyError as e:
         session.rollback()
         print(f"Erro ao criar a tarefa: {e}")
         return None
     finally:
         session.close()
+
+
 def get_task(task_id: str) -> Task:
     session = Session()
     try:
         return session.query(Task).filter(Task.id == task_id).first()
     finally:
         session.close()
+
 
 def update_task(task_id: str, **kwargs) -> bool:
     session = Session()
@@ -48,6 +59,7 @@ def update_task(task_id: str, **kwargs) -> bool:
     finally:
         session.close()
 
+
 def delete_task(task_id: str) -> bool:
     session = Session()
     try:
@@ -64,6 +76,7 @@ def delete_task(task_id: str) -> bool:
         return False
     finally:
         session.close()
+
 
 def list_tasks():
     session = Session()
